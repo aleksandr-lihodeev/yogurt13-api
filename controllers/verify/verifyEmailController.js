@@ -16,14 +16,7 @@ export const verifyEmailController = async (req, res) => {
             return res.status(404).send({message: "User not defined"});
         }
 
-        const htmlPage = `
-    <div>
-      <h1>Verify success</h1>
-      <a href="https://yogurt13.onrender.com/">Back to profile</a>
-    </div>
-    `;
-
-        return res.status(200).send(htmlPage);
+        return res.redirect(process.env.FRONTEND_HOST);
     } catch (e) {
         return res.status(500).send("Internal Server Error");
     }

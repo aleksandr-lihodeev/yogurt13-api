@@ -38,7 +38,7 @@ export const registerController = async (req, res) => {
             process.env.JWT_SECRET
         );
 
-        const verificationLink = `${process.env.FRONTEND_HOST}/verify-email/${token}`;
+        const verificationLink = `${process.env.BACKEND_HOST}/verify-email/${token}`;
         const mailOptions = {
             from: process.env.MAILRU_EMAIL,
             to: email,

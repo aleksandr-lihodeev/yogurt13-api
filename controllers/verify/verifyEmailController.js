@@ -19,7 +19,7 @@ export const verifyEmailController = async (req, res) => {
         const htmlPage = `
     <div>
       <h1>Verify success</h1>
-      <a href={process.env.FRONTEND_HOST}>Back to profile</a>
+      <a href="https://yogurt13.onrender.com/">Back to profile</a>
     </div>
     `;
 

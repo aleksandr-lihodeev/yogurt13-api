@@ -3,7 +3,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import upload from "../../aws/awsConfig.js";
 import { deleteImageFromS3 } from "../../aws/awsDelete.js";
-import {validateMulterErrors} from "../../middlewares/validateMulterErrors.js";
 
 export const editProfileController = async (req, res) => {
   try {
@@ -13,11 +12,10 @@ export const editProfileController = async (req, res) => {
         return res.status(500).send("Error uploading file");
       }
 
-
       const userId = req.user.userId;
 
       const user = await Auth.findById(userId);
-      console.log(user)
+      console.log(user);
       if (user.imageUrl) {
         const imageKey = new URL(user.imageUrl).pathname.split("/").pop();
         await deleteImageFromS3(imageKey, "avatar");
@@ -25,8 +23,9 @@ export const editProfileController = async (req, res) => {
       }
 
       const { name, email, newPassword } = req.body;
-      const imageUrl = req.file.location;
+      const imageUrl = req.file ? req.file.location : null;
 
+      console.log(req.body);
 
       if (!email && !name && !newPassword && !imageUrl)
         return res.status(404).send({ message: "required at least 1 field" });
@@ -46,7 +45,7 @@ export const editProfileController = async (req, res) => {
 
       const token = jwt.sign(
         { email: updatedUser.email, userId: updatedUser._id },
-        process.env.JWT_SECRET
+        process.env.JWT_SECRET,
       );
 
       res.status(200).send({
@@ -55,7 +54,6 @@ export const editProfileController = async (req, res) => {
         message: "Profile update success",
       });
     });
-
   } catch (error) {
     res.status(500).send({ message: "Internal Server Error" });
   }

@@ -6,6 +6,7 @@ import {editCrudController} from "../controllers/crud/editCrudController.js";
 import {statusCrudController} from "../controllers/crud/statusCrudController.js";
 import {deleteCrudController} from "../controllers/crud/deleteCrudController.js";
 import {imageEditCrudController} from "../controllers/crud/imageEditCrudController.js";
+import { chartCrudController } from "../controllers/crud/chartCrudController.js";
 
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.patch("/:id/title", verifyToken, editCrudController);
 router.patch("/:id/status", verifyToken, statusCrudController);
 router.patch("/:id/image", verifyToken, imageEditCrudController);
 router.delete("/:id/delete", verifyToken, deleteCrudController);
+router.get("/chart-crud", verifyToken, chartCrudController);
 
 export default router;
